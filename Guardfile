@@ -5,5 +5,5 @@
 #   watch(%r{file/path}) { `command(s)` }
 #
 guard 'shell' do
-  watch(/about(.*).rb/) {|m| `rake` }
+  watch(/(.*).rb$/) {|m| `rake` }
 end
