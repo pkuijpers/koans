@@ -1,6 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + '/edgecase')
+require File.expand_path(File.dirname(__FILE__) + '/neo')
 
-class AboutMessagePassing < EdgeCase::Koan
+class AboutMessagePassing < Neo::Koan
 
   class MessageCatcher
     def caught?
@@ -93,11 +93,11 @@ class AboutMessagePassing < EdgeCase::Koan
     # NOTE:
     #
     # In Ruby 1.8 the method_missing method is public and can be
-    # called as shown above.  However, in Ruby 1.9 the method_missing
-    # method is private.  We explicitly made it public in the testing
-    # framework so this example works in both versions of Ruby.  Just
-    # keep in mind you can't call method_missing like that in Ruby
-    # 1.9. normally.
+    # called as shown above. However, in Ruby 1.9 (and later versions)
+    # the method_missing method is private. We explicitly made it
+    # public in the testing framework so this example works in both
+    # versions of Ruby. Just keep in mind you can't call
+    # method_missing like that after Ruby 1.9 normally.
     #
     # Thanks.  We now return you to your regularly scheduled Ruby
     # Koans.
@@ -122,7 +122,7 @@ class AboutMessagePassing < EdgeCase::Koan
   def test_catching_messages_makes_respond_to_lie
     catcher = AllMessageCatcher.new
 
-    assert_nothing_raised(NoMethodError) do
+    assert_nothing_raised do
       catcher.any_method
     end
     assert_equal __, catcher.respond_to?(:any_method)
