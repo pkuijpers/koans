@@ -36,12 +36,12 @@ class AboutMethods < Neo::Koan
     exception = assert_raise(ArgumentError) do
       my_global_method
     end
-    assert_match(/wrong number of arguments \(0 for 2\)/, exception.message)
+    assert_match(/wrong number of arguments/, exception.message)
 
     exception = assert_raise(ArgumentError) do
       my_global_method(1,2,3)
     end
-    assert_match(/wrong number of arguments \(3 for 2\)/, exception.message)
+    assert_match(/wrong number of arguments/, exception.message)
   end
 
   # ------------------------------------------------------------------
@@ -120,7 +120,12 @@ class AboutMethods < Neo::Koan
     exception = assert_raise(NoMethodError) do
       self.my_private_method
     end
-    assert_match /private method `my_private_method' called/, exception.message
+    in_ruby_version("2") do
+      assert_match /private method `my_private_method' called/, exception.message
+    end
+    in_ruby_version("jruby") do
+      assert_match /undefined method `my_private_method'/, exception.message
+    end
   end
 
   # ------------------------------------------------------------------
